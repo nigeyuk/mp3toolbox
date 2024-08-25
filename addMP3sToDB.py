@@ -1,7 +1,8 @@
 # addMP3sToDB.py v 1.0.2
 # Scans a directory for MP3 files and add their metadata to a MySQL database.
 # Dupe detection via filehashing
-# Script by Nigel Smart (ngsmart1979@gmail.com
+# Script by Nigel Smart (ngsmart1979@gmail.com)
+# 
 # Latest version always on github.
 # https://www.github.com/nigeyuk/mp3toolbox
 
