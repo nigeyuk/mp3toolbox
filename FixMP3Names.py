@@ -7,7 +7,7 @@
 # in remove_numbers_pattern and
 # remove_brackets_patterm
 # 
-# Script by Nigel Smart (ngsmart1979@gmail.com
+# Script by Nigel Smart (ngsmart1979@gmail.com)
 # Latest version always on github.
 # https://www.github.com/nigeyuk/mp3toolbox
 
