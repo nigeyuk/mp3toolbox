@@ -2,14 +2,16 @@
 # A simple script that scans a directory for MP3 files
 # and remove any space before the file extension .mp3
 #
-# Script by Nigel Smart (ngsmart1979@gmail.com
+# Script by Nigel Smart (ngsmart1979@gmail.com)
 # Latest version always on github.
 # https://www.github.com/nigeyuk/mp3toolbox
 
 import os
 from mutagen.easyid3 import EasyID3
 
-# Define the directory where your MP3 files are located remove r if using a linux system
+# Define the directory where your MP3 files are located 
+# Remove r if using a linux system
+
 music_dir = r'/path/to/mp3s'
 
 # Function to clean up the filename and remove extra spaces
