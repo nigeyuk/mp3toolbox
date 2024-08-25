@@ -1,7 +1,8 @@
 # RemoveID3.py v 1.0.1
-# Scans a directory for MP3 files and wiped the ID3 Tag
+# Scans a directory for MP3 files and wipe the ID3 Tag
+#
+# Script by Nigel Smart (ngsmart1979@gmail.com)
 # 
-# Script by Nigel Smart (ngsmart1979@gmail.com
 # Latest version always on github.
 # https://www.github.com/nigeyuk/mp3toolbox
 
@@ -10,7 +11,9 @@ import os
 from mutagen.easyid3 import EasyID3
 from mutagen.id3 import ID3, ID3NoHeaderError
 
-# Define the directory where your MP3 files are located remove r if using on a linux system.
+# Define the directory where your MP3 files are located 
+# Remove r if using on a linux system.
+
 music_dir = r'/path/to/mp3s'
 
 # Function to remove all ID3 tags
