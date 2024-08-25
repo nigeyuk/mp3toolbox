@@ -5,15 +5,17 @@
 # filename should be in the format
 # "Artist - Title.mp3"
 #
-# Script by Nigel Smart (ngsmart1979@gmail.com
+# Script by Nigel Smart (ngsmart1979@gmail.com)
 # Latest version always on github.
 # https://www.github.com/nigeyuk/mp3toolbox
 
 import os
 from mutagen.easyid3 import EasyID3
 
-# Define the directory where your MP3 files are located
-music_dir = r'D:\Audio\TAW Audio\MP3'
+# Define the directory where your MP3 files are located.  
+# Remove r if running on a linux system
+
+music_dir = r'your/audio/path'
 
 # Function to update ID3 tags based on filename
 def update_id3_tags(filepath):
