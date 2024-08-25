@@ -1,11 +1,13 @@
 # FixMP3Names.py v 1.0.1
 # Scans a directory for MP3 files that have numbers and a period
-# preeceding the mp3 name, and quare brackets at the end of the filename.
+# preeceding the mp3 name, and square brackets at the end of the filename.
+#
 # example "100.MyMp3Artist - MyMP3Title [MyRecordLabel].mp3"
-# the 100. and [MyRecordLabel] would be removed.
+#
+# The 100. and [MyRecordLabel] would be removed.
 # The regular expressions can be customised
 # in remove_numbers_pattern and
-# remove_brackets_patterm
+# remove_brackets_pattern
 # 
 # Script by Nigel Smart (ngsmart1979@gmail.com)
 # Latest version always on github.
@@ -17,7 +19,9 @@ import os
 import re
 
 # Define the directory where your MP3 files are located
-music_dir = r'D:\Audio\TAW Audio\MP3'
+# Remove r if running on a linux system
+
+music_dir = r'/your/music/path'
 
 # Regular expression to match and remove leading numbers and the period
 remove_numbers_pattern = re.compile(r'^\d+\.\s*')
