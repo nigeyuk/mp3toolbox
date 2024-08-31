@@ -1,14 +1,38 @@
+# FixMP3NamesWithHyphens.py v 1.0.1
+# Scans a directory for MP3 files that have numbers and a hyphen
+# preeceding the mp3 name.
+#
+# example "100. - MyMp3Artist - MyMP3Title.mp3"
+#
+# The 100. - would be removed.
+# The regular expressions can be customised
+# on line 29 and 30 of the script
+# Script by Nigel Smart (ngsmart1979@gmail.com)
+# Latest version always on github.
+# https://www.github.com/nigeyuk/mp3toolbox
+
+
 import os
 import re
 import time
 import argparse
 
 def clean_filename(filename):
+    # Check if the filename starts with a hyphen and space and remove it
+    if filename.startswith('- '):
+        filename = filename[2:]
+
+    # Remove special characters (e.g., vertical bar) and clean the filename
+    filename = re.sub(r'[｜]', '', filename)  # Remove the vertical bar
+
     # Split the filename at the first hyphen
     parts = filename.split(' - ', 1)
     
     if len(parts) < 2:
-        return filename  # If there is no hyphen, return filename unchanged
+        # Remove numbers, hyphens, ampersands, and parentheses with their contents from the whole filename
+        cleaned_filename = re.sub(r'[\d&\-]', '', filename)
+        cleaned_filename = re.sub(r'\(.*?\)', '', cleaned_filename)  # Remove parentheses and their contents
+        return cleaned_filename.strip()
 
     # Remove numbers, hyphens, ampersands, and parentheses with their contents from the first part
     cleaned_first_part = re.sub(r'[\d&\-]', '', parts[0])
