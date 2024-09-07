@@ -1,59 +1,63 @@
-# FixMP3Names.py v 1.0.1
-# Scans a directory for MP3 files that have numbers and a period
-# preeceding the mp3 name, and square brackets at the end of the filename.
-#
-# example "100.MyMp3Artist - MyMP3Title [MyRecordLabel].mp3"
-#
-# The 100. and [MyRecordLabel] would be removed.
-# The regular expressions can be customised
-# in remove_numbers_pattern and
-# remove_brackets_pattern
-# 
-# Script by Nigel Smart (ngsmart1979@gmail.com)
-# Latest version always on github.
-# https://www.github.com/nigeyuk/mp3toolbox
-
-
-
 import os
 import re
+import time
+import argparse
+import logging
 
-# Define the directory where your MP3 files are located
-# Remove r if running on a linux system
+def setup_logging(log_file):
+    logging.basicConfig(
+        filename=log_file,
+        level=logging.INFO,
+        format='%(asctime)s - %(levelname)s - %(message)s'
+    )
 
-music_dir = r'/your/music/path'
+def rename_files(directory):
+    renamed_files = 0
+    not_renamed_files = 0
+    errors = 0
+    start_time = time.time()
 
-# Regular expression to match and remove leading numbers and the period
-remove_numbers_pattern = re.compile(r'^\d+\.\s*')
+    for filename in os.listdir(directory):
+        if filename.lower().endswith('.mp3'):
+            new_filename = re.sub(r'^\d+\.\s+', '', filename)
+            if new_filename != filename:
+                try:
+                    os.rename(os.path.join(directory, filename), os.path.join(directory, new_filename))
+                    logging.info(f'Renamed: {filename} -> {new_filename}')
+                    renamed_files += 1
+                except Exception as e:
+                    logging.error(f'Error renaming {filename}: {e}')
+                    errors += 1
+            else:
+                not_renamed_files += 1
 
-# Regular expression to remove square brackets and their contents
-remove_brackets_pattern = re.compile(r'\[.*?\]')
+    end_time = time.time()
+    duration = end_time - start_time
 
-def clean_filename(filename):
-    # Remove the leading numbers and period
-    filename = remove_numbers_pattern.sub('', filename)
-    
-    # Remove anything within square brackets (including the brackets themselves)
-    filename = remove_brackets_pattern.sub('', filename)
-    
-    # Strip any leading or trailing whitespace left after removal
-    filename = filename.strip()
-    
-    return filename
+    logging.info(f'Files renamed: {renamed_files}')
+    logging.info(f'Files not renamed: {not_renamed_files}')
+    logging.info(f'Errors encountered: {errors}')
+    logging.info(f'Time taken: {duration:.2f} seconds')
 
-# Iterate through all files in the directory
-for filename in os.listdir(music_dir):
-    # Check if the file is an MP3 file
-    if filename.endswith(".mp3"):
-        # Clean the filename by removing numbers, period, and content in brackets
-        new_name = clean_filename(filename)
-        
-        # Get the full paths for the old and new filenames
-        old_file = os.path.join(music_dir, filename)
-        new_file = os.path.join(music_dir, new_name)
-        
-        # Rename the file
-        os.rename(old_file, new_file)
-        print(f'Renamed: {filename} -> {new_name}')
+    print(f'Files renamed: {renamed_files}')
+    print(f'Files not renamed: {not_renamed_files}')
+    print(f'Errors encountered: {errors}')
+    print(f'Time taken: {duration:.2f} seconds')
 
-print("Renaming complete!")
+def main():
+    parser = argparse.ArgumentParser(description='Rename mp3 files by removing number and period from the beginning of the filename.')
+    parser.add_argument('-d', '--directory', type=str, required=True, help='Directory to perform operations on')
+    args = parser.parse_args()
+
+    log_file = 'rename_log.txt'
+    setup_logging(log_file)
+
+    if not os.path.isdir(args.directory):
+        print(f"Error: The directory '{args.directory}' does not exist.")
+        logging.error(f"Directory '{args.directory}' does not exist.")
+        return
+
+    rename_files(args.directory)
+
+if __name__ == '__main__':
+    main()
